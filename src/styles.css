@@ -1,0 +1,129 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Florida Coast Plumbing — coastal-modern design system */
+
+@theme inline {
+  --color-navy: #0C2D42;
+  --color-coastal: #2E86BD;
+  --color-water: #39A9E0;
+  --color-orange: #FF6814;
+  --color-orange-dark: #E85A0F;
+  --color-sunset: #F8941D;
+  --color-sunset-pale: #FFD79C;
+  --color-water-pale: #CBEFFF;
+  --color-cream: #FFF7E6;
+  --color-seafoam: #F3FBFE;
+  --color-white: #FFFFFF;
+  --color-ink: #1D2B35;
+  --color-slate: #6E7D86;
+  --color-border: #D5E5EC;
+  --color-success: #2F7B5B;
+  --color-error: #B8453C;
+
+  /* shadcn semantic aliases so existing UI components work */
+  --color-background: #FFFFFF;
+  --color-foreground: #1D2B35;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #1D2B35;
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #1D2B35;
+  --color-primary: #FF6814;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #2E86BD;
+  --color-secondary-foreground: #FFFFFF;
+  --color-muted: #F3FBFE;
+  --color-muted-foreground: #6E7D86;
+  --color-accent: #FFF7E6;
+  --color-accent-foreground: #0C2D42;
+  --color-destructive: #B8453C;
+  --color-destructive-foreground: #FFFFFF;
+  --color-input: #D5E5EC;
+  --color-ring: #2E86BD;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: #FFFFFF;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-navy);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+  ::selection {
+    background: #FF6814;
+    color: #FFFFFF;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-coastal);
+}
+
+@utility container-wide {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (min-width: 768px) {
+  .container-wide { padding-left: 32px; padding-right: 32px; }
+}
+@media (min-width: 1100px) {
+  .container-wide { padding-left: 64px; padding-right: 64px; }
+}
+
+@utility curved-underline {
+  position: relative;
+  display: inline-block;
+}
+
+@keyframes drift-x {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-24px); }
+  100% { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-drift {
+    animation: drift-x 24s ease-in-out infinite;
+  }
+}
