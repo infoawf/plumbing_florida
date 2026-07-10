@@ -175,13 +175,13 @@ function TrustStrip() {
   ];
   return (
     <section className="relative" style={{ background: "#0C2D42" }} aria-label="Trust markers">
-      <div className="container-wide grid grid-cols-2 gap-6 py-10 md:grid-cols-4 md:py-8">
+      <div className="container-wide grid grid-cols-1 gap-6 py-10 sm:grid-cols-2 md:grid-cols-4 md:py-8">
         {items.map(({ icon: I, label }) => (
           <div key={label} className="flex items-center gap-3">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full" style={{ border: "1.5px solid rgba(203,239,255,0.4)" }}>
               <I className="h-4 w-4 text-[#CBEFFF]" aria-hidden />
             </span>
-            <span className="text-[14px] font-bold text-white md:text-[15px]">{label}</span>
+            <span className="text-[13px] font-bold leading-snug text-white sm:text-[14px] md:text-[15px]">{label}</span>
           </div>
         ))}
       </div>
@@ -195,7 +195,7 @@ function Services() {
       <div className="container-wide">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#2E86BD]">Our Services</p>
-          <h2 className="font-display mt-3 text-[40px] font-extrabold text-[#0C2D42] md:text-[54px]">
+          <h2 className="font-display mt-3 text-[32px] font-extrabold text-[#0C2D42] sm:text-[40px] md:text-[54px]">
             Help for every part of your plumbing system.
           </h2>
           <p className="mt-4 text-[17px] text-[#1D2B35]">
@@ -261,7 +261,7 @@ function AboutPreview() {
       <div className="container-wide grid items-center gap-12 lg:grid-cols-2">
         <div>
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#2E86BD]">Local by choice</p>
-          <h2 className="font-display mt-3 text-[38px] font-extrabold leading-tight text-[#0C2D42] md:text-[50px]">
+          <h2 className="font-display mt-3 text-[32px] font-extrabold leading-tight text-[#0C2D42] sm:text-[38px] md:text-[50px]">
             Your neighbors when the water won’t cooperate.
           </h2>
           <p className="mt-5 max-w-[560px] text-[17px] leading-relaxed text-[#1D2B35]">
@@ -288,18 +288,18 @@ function AboutPreview() {
         </div>
 
         <div className="relative mx-auto w-full max-w-[520px]">
-          <PalmSilhouette color="#0C2D42" className="absolute -left-4 top-6 h-72 w-52 opacity-90" />
-          <SunsetLines className="absolute right-8 top-0 h-16 w-32 opacity-80" />
-          <div className="relative ml-16">
-            <div className="relative overflow-hidden rounded-full" style={{ width: 360, height: 360, maxWidth: "100%", border: "4px solid #0C2D42" }}>
+          <PalmSilhouette color="#0C2D42" className="pointer-events-none absolute -left-4 top-6 hidden h-48 w-36 opacity-90 sm:block sm:h-72 sm:w-52" />
+          <SunsetLines className="pointer-events-none absolute right-4 top-0 h-12 w-24 opacity-80 sm:right-8 sm:h-16 sm:w-32" />
+          <div className="relative mx-auto max-w-[320px] sm:max-w-none sm:ml-16">
+            <div className="relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-full sm:max-w-[360px]" style={{ border: "4px solid #0C2D42" }}>
               <img src={techFixture} alt="Florida Coast technician inspecting a residential fixture" className="h-full w-full object-cover" width={900} height={900} loading="lazy" />
             </div>
-            <div className="absolute -bottom-4 -right-4 overflow-hidden rounded-full" style={{ width: 160, height: 160, border: "4px solid #39A9E0", background: "#FFFFFF" }}>
+            <div className="absolute -bottom-2 -right-2 overflow-hidden rounded-full sm:-bottom-4 sm:-right-4" style={{ width: "min(120px, 35%)", aspectRatio: "1", border: "4px solid #39A9E0", background: "#FFFFFF" }}>
               <img src={filtration} alt="Residential water filtration system" className="h-full w-full object-cover" width={700} height={700} loading="lazy" />
             </div>
-            <WaterDrop className="absolute -left-6 top-24 h-8 w-6 opacity-90" />
-            <WaterDrop className="absolute -left-2 top-40 h-5 w-4 opacity-80" color="#2E86BD" />
-            <WaterDrop className="absolute left-6 top-56 h-4 w-3 opacity-70" color="#39A9E0" />
+            <WaterDrop className="pointer-events-none absolute -left-4 top-20 h-6 w-5 opacity-90 sm:-left-6 sm:top-24 sm:h-8 sm:w-6" />
+            <WaterDrop className="pointer-events-none absolute -left-1 top-32 h-4 w-3 opacity-80 sm:-left-2 sm:top-40 sm:h-5 sm:w-4" color="#2E86BD" />
+            <WaterDrop className="pointer-events-none absolute left-4 top-44 h-3 w-2 opacity-70 sm:left-6 sm:top-56 sm:h-4 sm:w-3" color="#39A9E0" />
           </div>
         </div>
       </div>
@@ -317,7 +317,7 @@ function WhyChooseUs() {
     <section className="bg-white py-24 md:py-28">
       <div className="container-wide grid items-center gap-14 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <h2 className="font-display max-w-lg text-[38px] font-extrabold leading-tight text-[#0C2D42] md:text-[52px]">
+          <h2 className="font-display max-w-lg text-[32px] font-extrabold leading-tight text-[#0C2D42] sm:text-[38px] md:text-[52px]">
             Plumbing service without unnecessary surprises.
           </h2>
           <div className="mt-10 space-y-6">
@@ -363,7 +363,7 @@ function ProcessWave() {
       <div className="container-wide relative">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#39A9E0]">What to expect</p>
-          <h2 className="font-display mt-3 text-[38px] font-extrabold text-white md:text-[52px]" style={{ color: "#FFFFFF" }}>
+          <h2 className="font-display mt-3 text-[32px] font-extrabold text-white sm:text-[38px] md:text-[52px]" style={{ color: "#FFFFFF" }}>
             Four steps from problem to solution.
           </h2>
         </div>
@@ -418,7 +418,7 @@ function ServiceArea() {
       <div className="container-wide relative grid items-center gap-12 lg:grid-cols-2">
         <div>
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#39A9E0]">Where we work</p>
-          <h2 className="font-display mt-3 text-[38px] font-extrabold text-white md:text-[52px]" style={{ color: "#FFFFFF" }}>
+          <h2 className="font-display mt-3 text-[32px] font-extrabold text-white sm:text-[38px] md:text-[52px]" style={{ color: "#FFFFFF" }}>
             Serving homes throughout Palm Beach County.
           </h2>
           <p className="mt-5 max-w-[560px] text-[17px] leading-relaxed text-[#CBEFFF]">
@@ -453,7 +453,7 @@ function FAQSection() {
       <div className="container-wide">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#2E86BD]">Plumbing Questions</p>
-          <h2 className="font-display mt-3 text-[38px] font-extrabold text-[#0C2D42] md:text-[52px]">
+          <h2 className="font-display mt-3 text-[32px] font-extrabold text-[#0C2D42] sm:text-[38px] md:text-[52px]">
             Helpful answers before your appointment.
           </h2>
         </div>

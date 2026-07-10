@@ -122,7 +122,7 @@ function StickyNav() {
   return (
     <div className="sticky top-[70px] z-30 border-y bg-white/95 backdrop-blur" style={{ borderColor: "#D5E5EC" }}>
       <div className="container-wide">
-        <div className="flex gap-1 overflow-x-auto py-3 md:justify-center">
+        <div className="flex gap-1 overflow-x-auto overscroll-x-contain py-3 [-webkit-overflow-scrolling:touch] md:justify-center">
           {CATEGORIES.map((c) => {
             const isActive = active === c.id;
             return (
@@ -157,10 +157,10 @@ function CategoryHeader({ eyebrow, title, body, Icon }: { eyebrow: string; title
 function ServiceRow({ title, description, chips, alt = false }: { title: string; description: string; chips: string[]; alt?: boolean }) {
   return (
     <div
-      className="grid items-center gap-6 rounded-[20px] px-6 py-6 md:grid-cols-12"
+      className="grid items-start gap-4 rounded-[20px] px-4 py-5 sm:items-center sm:gap-6 sm:px-6 sm:py-6 md:grid-cols-12"
       style={{ background: alt ? "#F3FBFE" : "#FFFFFF", borderBottom: "2px solid #CBEFFF" }}
     >
-      <h3 className="font-display text-[22px] font-extrabold text-[#0C2D42] md:col-span-3">{title}</h3>
+      <h3 className="font-display text-[20px] font-extrabold text-[#0C2D42] sm:text-[22px] md:col-span-3">{title}</h3>
       <p className="text-[15px] text-[#1D2B35] md:col-span-5">{description}</p>
       <div className="flex flex-wrap gap-2 md:col-span-3">
         {chips.map((c) => (
@@ -169,7 +169,7 @@ function ServiceRow({ title, description, chips, alt = false }: { title: string;
           </span>
         ))}
       </div>
-      <div className="md:col-span-1 md:text-right">
+      <div className="hidden md:col-span-1 md:block md:text-right">
         <ArrowRight className="ml-auto h-5 w-5 text-[#2E86BD]" aria-hidden />
       </div>
     </div>
@@ -287,7 +287,7 @@ function WaterHeaters() {
               { title: "Repair", when: "Unit is under 8 years old and the fault is isolated", cost: "Lower upfront", benefit: "Fastest to restore hot water" },
               { title: "Replace", when: "Unit is aging, corroded, or recurring failures", cost: "Higher upfront, lower long-term", benefit: "Improved efficiency and reliability" },
             ].map((r) => (
-              <div key={r.title} className="p-8" style={{ borderRight: r.title === "Repair" ? "1px solid #D5E5EC" : undefined }}>
+              <div key={r.title} className={`border-b p-6 sm:p-8 md:border-b-0 ${r.title === "Repair" ? "md:border-r" : ""}`} style={{ borderColor: "#D5E5EC" }}>
                 <h3 className="font-display text-[24px] font-extrabold text-[#0C2D42]">{r.title}</h3>
                 <dl className="mt-5 space-y-3 text-[15px] text-[#1D2B35]">
                   <div><dt className="text-[12px] font-extrabold uppercase tracking-widest text-[#2E86BD]">When</dt><dd>{r.when}</dd></div>

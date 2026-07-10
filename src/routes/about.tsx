@@ -45,7 +45,7 @@ function Hero() {
       <div className="container-wide grid items-center gap-12 py-20 md:py-24 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#2E86BD]">About Florida Coast</p>
-          <h1 className="font-display mt-3 text-[44px] font-extrabold leading-[1.05] text-[#0C2D42] md:text-[68px]">
+          <h1 className="font-display mt-3 text-[36px] font-extrabold leading-[1.05] text-[#0C2D42] sm:text-[44px] md:text-[68px]">
             Local plumbing service built around honest communication.
           </h1>
           <p className="mt-5 max-w-[600px] text-[17px] leading-relaxed text-[#1D2B35]">
@@ -60,10 +60,10 @@ function Hero() {
           <ArchFrame className="mx-auto aspect-[4/5] w-full max-w-[420px]">
             <img src={teamVan} alt="Florida Coast Plumbing team" className="h-full w-full object-cover" width={900} height={1100} loading="eager" />
           </ArchFrame>
-          <div className="absolute -bottom-6 -left-4 overflow-hidden rounded-full" style={{ width: 140, height: 140, border: "4px solid #FF6814", background: "#FFFFFF" }}>
+          <div className="absolute -bottom-4 -left-2 overflow-hidden rounded-full sm:-bottom-6 sm:-left-4" style={{ width: "min(100px, 28%)", aspectRatio: "1", border: "4px solid #FF6814", background: "#FFFFFF" }}>
             <img src={techFixture} alt="Technician at work" className="h-full w-full object-cover" width={900} height={900} loading="lazy" />
           </div>
-          <WaterDrop className="absolute -right-2 top-24 h-10 w-8" color="#39A9E0" />
+          <WaterDrop className="pointer-events-none absolute -right-2 top-24 h-10 w-8" color="#39A9E0" />
         </div>
       </div>
       <WaveDivider fill="#FFFFFF" height={70} />
@@ -77,7 +77,7 @@ function Story() {
       <div className="container-wide grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#2E86BD]">Our Story</p>
-          <h2 className="font-display mt-3 text-[38px] font-extrabold text-[#0C2D42] md:text-[48px]">Rooted in Palm Beach County.</h2>
+          <h2 className="font-display mt-3 text-[32px] font-extrabold text-[#0C2D42] sm:text-[38px] md:text-[48px]">Rooted in Palm Beach County.</h2>
         </div>
         <div className="space-y-4 text-[17px] leading-relaxed text-[#1D2B35] lg:col-span-7">
           <p>Florida Coast Plumbing focuses on residential plumbing for a specific stretch of Florida — Boynton Beach, Boca Raton, Delray Beach, West Palm Beach, Wellington, Jupiter, Lake Worth Beach, and Palm Beach Gardens. Working in one region means we recognize the quirks: older coastal piping, hard-water buildup, and seasonal-home considerations.</p>
@@ -226,12 +226,12 @@ function Stats() {
     { top: "Licensed", bottom: "and Insured" },
   ];
   return (
-    <section className="bg-white py-20">
-      <div className="container-wide grid grid-cols-2 gap-6 md:grid-cols-4">
+    <section className="bg-white py-16 sm:py-20">
+      <div className="container-wide grid grid-cols-1 gap-4 min-[400px]:grid-cols-2 sm:gap-6 md:grid-cols-4">
         {items.map((s) => (
-          <div key={s.bottom} className="rounded-[20px] p-6 text-center" style={{ background: "#FFF7E6" }}>
-            <p className="font-display text-[36px] font-extrabold text-[#FF6814] md:text-[44px]">{s.top}</p>
-            <p className="mt-2 text-[13px] font-bold uppercase tracking-widest text-[#0C2D42]">{s.bottom}</p>
+          <div key={s.bottom} className="rounded-[20px] p-5 text-center sm:p-6" style={{ background: "#FFF7E6" }}>
+            <p className="font-display text-[28px] font-extrabold leading-tight break-words text-[#FF6814] sm:text-[36px] md:text-[44px]">{s.top}</p>
+            <p className="mt-2 text-[11px] font-bold uppercase tracking-wide text-[#0C2D42] sm:text-[13px] sm:tracking-widest">{s.bottom}</p>
           </div>
         ))}
       </div>

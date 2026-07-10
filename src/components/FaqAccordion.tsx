@@ -34,7 +34,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
               </span>
             </button>
             {isOpen && (
-              <div className="pb-6 pl-12 pr-14 text-[16px] leading-relaxed text-[#1D2B35]">
+              <div className="pb-6 pl-10 pr-4 text-[15px] leading-relaxed text-[#1D2B35] sm:pl-12 sm:pr-14 sm:text-[16px]">
                 {it.a}
               </div>
             )}

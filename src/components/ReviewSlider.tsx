@@ -34,6 +34,8 @@ export function ReviewSlider() {
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const startX = useRef<number | null>(null);
+  const startY = useRef<number | null>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
   const reduce = useRef(false);
 
   useEffect(() => {
@@ -48,16 +50,55 @@ export function ReviewSlider() {
 
   const go = (d: number) => setIdx((i) => (i + d + REVIEWS.length) % REVIEWS.length);
 
+  useEffect(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+
+    const onTouchStart = (e: TouchEvent) => {
+      startX.current = e.touches[0].clientX;
+      startY.current = e.touches[0].clientY;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (startX.current == null || startY.current == null) return;
+      const dx = e.touches[0].clientX - startX.current;
+      const dy = e.touches[0].clientY - startY.current;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+        e.preventDefault();
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (startX.current == null || startY.current == null) return;
+      const dx = e.changedTouches[0].clientX - startX.current;
+      const dy = e.changedTouches[0].clientY - startY.current;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        go(dx < 0 ? 1 : -1);
+      }
+      startX.current = null;
+      startY.current = null;
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+    };
+  }, []);
+
   return (
     <div
-      className="relative overflow-hidden"
+      className="relative isolate overflow-hidden"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
       {/* Sunset bands */}
-      <div aria-hidden className="absolute inset-0 -z-10">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-x-0 top-0 h-[42%]" style={{ background: "linear-gradient(180deg,#FF6814 0%,#F8941D 100%)" }} />
         <div className="absolute inset-x-0 top-[42%] h-2" style={{ background: "#FFF7E6" }} />
         <div className="absolute inset-x-0 top-[calc(42%+8px)] bottom-0" style={{ background: "linear-gradient(180deg,#39A9E0 0%,#2E86BD 100%)" }} />
@@ -67,29 +108,23 @@ export function ReviewSlider() {
       </div>
 
       <div className="container-wide py-24 md:py-28">
-        <div className="mx-auto max-w-2xl text-center text-white">
+        <div className="relative z-10 mx-auto max-w-2xl text-center text-white">
           <p className="text-[12px] font-extrabold uppercase tracking-[0.2em] text-white/85">Real customer feedback</p>
-          <h2 className="font-display mt-3 text-[42px] font-extrabold md:text-[54px]" style={{ color: "#FFFFFF" }}>
+          <h2 className="font-display mt-3 text-[32px] font-extrabold sm:text-[42px] md:text-[54px]" style={{ color: "#FFFFFF" }}>
             What your Palm Beach neighbors are saying.
           </h2>
         </div>
 
         <div
-          className="relative mx-auto mt-12 max-w-[820px]"
-          onTouchStart={(e) => (startX.current = e.touches[0].clientX)}
-          onTouchEnd={(e) => {
-            if (startX.current == null) return;
-            const dx = e.changedTouches[0].clientX - startX.current;
-            if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-            startX.current = null;
-          }}
+          ref={sliderRef}
+          className="relative z-10 mx-auto mt-12 max-w-[820px] touch-pan-y"
           aria-roledescription="carousel"
           aria-label="Customer reviews"
         >
           {/* Card */}
           <article
             key={idx}
-            className="relative mx-auto overflow-hidden rounded-[24px] bg-white p-8 md:p-12 shadow-[0_30px_60px_-24px_rgba(12,45,66,0.4)]"
+            className="relative mx-auto overflow-hidden rounded-[24px] bg-white p-6 sm:p-8 md:p-12 shadow-[0_30px_60px_-24px_rgba(12,45,66,0.4)]"
             aria-live="polite"
           >
             <div className="absolute inset-x-0 top-0 h-1.5" style={{ background: "#FF6814" }} />
@@ -99,28 +134,28 @@ export function ReviewSlider() {
                 <Star key={i} className="h-5 w-5" fill="#FF6814" stroke="#FF6814" aria-hidden />
               ))}
             </div>
-            <p className="font-display mt-6 text-[22px] font-semibold leading-snug text-[#0C2D42] md:text-[26px]">
+            <p className="font-display mt-6 text-[18px] font-semibold leading-snug text-[#0C2D42] sm:text-[22px] md:text-[26px]">
               “{REVIEWS[idx].text}”
             </p>
-            <div className="mt-6 flex items-center justify-between gap-4 border-t pt-5" style={{ borderColor: "#D5E5EC" }}>
+            <div className="mt-6 flex flex-col gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4" style={{ borderColor: "#D5E5EC" }}>
               <div>
                 <div className="text-[15px] font-bold text-[#0C2D42]">
                   {REVIEWS[idx].name} <span className="font-medium text-[#6E7D86]">— {REVIEWS[idx].city}</span>
                 </div>
                 <div className="text-[13px] text-[#2E86BD]">{REVIEWS[idx].service}</div>
               </div>
-              <span className="rounded-full border border-[#D5E5EC] px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[#2E86BD]">
+              <span className="w-fit rounded-full border border-[#D5E5EC] px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[#2E86BD]">
                 Verified
               </span>
             </div>
           </article>
 
-          <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="relative z-20 mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <button
               type="button"
               onClick={() => go(-1)}
               aria-label="Previous review"
-              className="grid h-11 w-11 place-items-center rounded-[10px] bg-white text-[#0C2D42] shadow-md hover:-translate-y-[1px]"
+              className="grid h-11 w-11 shrink-0 touch-manipulation place-items-center rounded-[10px] bg-white text-[#0C2D42] shadow-md hover:-translate-y-[1px] active:scale-95"
             >
               <ChevronLeft className="h-5 w-5" aria-hidden />
             </button>
@@ -128,10 +163,11 @@ export function ReviewSlider() {
               {REVIEWS.map((_, i) => (
                 <button
                   key={i}
+                  type="button"
                   aria-label={`Go to review ${i + 1}`}
                   aria-current={i === idx}
                   onClick={() => setIdx(i)}
-                  className="h-2 rounded-full transition-all"
+                  className="h-2 shrink-0 touch-manipulation rounded-full transition-all"
                   style={{
                     width: i === idx ? 28 : 12,
                     background: i === idx ? "#FFFFFF" : "rgba(255,255,255,0.55)",
@@ -143,11 +179,11 @@ export function ReviewSlider() {
               type="button"
               onClick={() => go(1)}
               aria-label="Next review"
-              className="grid h-11 w-11 place-items-center rounded-[10px] bg-white text-[#0C2D42] shadow-md hover:-translate-y-[1px]"
+              className="grid h-11 w-11 shrink-0 touch-manipulation place-items-center rounded-[10px] bg-white text-[#0C2D42] shadow-md hover:-translate-y-[1px] active:scale-95"
             >
               <ChevronRight className="h-5 w-5" aria-hidden />
             </button>
-            <span className="ml-3 text-[13px] font-semibold text-white/90">
+            <span className="w-full text-center text-[13px] font-semibold text-white/90 sm:ml-3 sm:w-auto">
               {idx + 1} / {REVIEWS.length}
             </span>
           </div>
