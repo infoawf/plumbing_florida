@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, X, Calendar, Phone, ChevronDown, ArrowRight, Wrench, Droplets, Flame } from "lucide-react";
 import { Logo } from "./Logo";
@@ -108,8 +109,8 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b transition-colors duration-200 ${
-        scrolled ? "border-[#CBEFFF] bg-white/95 backdrop-blur" : "border-[#D5E5EC] bg-white"
+      className={`sticky top-0 z-50 w-full border-b transition-colors duration-200 ${
+        scrolled ? "border-[#CBEFFF] bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90" : "border-[#D5E5EC] bg-white"
       }`}
     >
       <div className="container-wide flex items-center justify-between" style={{ minHeight: scrolled ? 72 : 82 }}>
@@ -185,14 +186,17 @@ export function SiteHeader() {
         </button>
       </div>
 
-      {/* Mobile drawer */}
-      {drawerOpen && (
-        <MobileDrawer
-          onClose={() => setDrawerOpen(false)}
-          servicesOpen={drawerServicesOpen}
-          setServicesOpen={setDrawerServicesOpen}
-        />
-      )}
+      {/* Mobile drawer — portaled to body so backdrop-blur on sticky header doesn't trap fixed positioning */}
+      {drawerOpen &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <MobileDrawer
+            onClose={() => setDrawerOpen(false)}
+            servicesOpen={drawerServicesOpen}
+            setServicesOpen={setDrawerServicesOpen}
+          />,
+          document.body,
+        )}
     </header>
   );
 }
@@ -277,7 +281,7 @@ function MobileDrawer({
   setServicesOpen: (v: boolean) => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Site menu">
+    <div className="fixed inset-0 z-[100] lg:hidden" role="dialog" aria-modal="true" aria-label="Site menu">
       <button
         aria-label="Close menu"
         onClick={onClose}
